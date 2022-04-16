@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(lexzilla)
+project(lexzilla
+    VERSION 5.1.5
+    DESCRIPTION "A library of language lexers for use with Scintilla "
+    LANGUAGES CXX
+)
+
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -167,6 +172,20 @@ target_include_directories(lexzilla PRIVATE
     lexlib/
     include/
 )
+set_property(TARGET lexzilla PROPERTY VERSION "${CMAKE_PROJECT_VERSION}")
+set_property(TARGET lexzilla PROPERTY SOVERSION 5 )
 
 # TODO enable this onl for release builds. Code crashes due to an assert right now.
 target_compile_definitions(lexzilla PRIVATE  -DNDEBUG=1)
+
+# TODO - this part is too ugly, and should not be here
+if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+    target_compile_options(lexzilla PRIVATE -Wall -Wextra -pedantic --warn-no-unused-variable -Wformat -Wformat-security)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    target_compile_options(lexzilla PRIVATE -Wall -Wextra -pedantic --warn-no-unused-variable -Wformat -Wformat-security)
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
+    MESSAGE("TODO: Intel compiler uses generic builds - add better compile flags")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    target_compile_options(lexzilla PRIVATE /utf-8 /guard:cf)
+    target_link_options(lexzilla PRIVATE /guard:cf)
+endif()
