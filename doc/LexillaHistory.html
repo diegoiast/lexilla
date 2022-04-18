@@ -578,9 +578,42 @@
       </tr><tr>
 	<td>Red_M</td>
 	<td>cdbdev</td>
+	<td>Andrey Smolyakov</td>
     </tr>
     </table>
     <h2>Releases</h2>
+    <h3>
+       <a href="https://www.scintilla.org/lexilla517.zip">Release 5.1.7</a>
+    </h3>
+    <ul>
+	<li>
+	Released 31 March 2022.
+	</li>
+	<li>
+	Add LexAccessor::StyleIndexAt to retrieve style values as unsigned to handle styles > 127 better.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/61">Issue #61</a>.
+	</li>
+	<li>
+	HTML: Fix folding of JavaScript doc comments.
+	<a href="https://sourceforge.net/p/scintilla/bugs/2219/">Bug #2219</a>.
+	</li>
+	<li>
+	Matlab: add "classdef" and "spmd" to folding keywords.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/70">Pull request #70</a>.
+	</li>
+	<li>
+	Matlab: handle "arguments" contextual keyword.
+	<a href="https://github.com/ScintillaOrg/lexilla/pull/70">Pull request #70</a>.
+	</li>
+	<li>
+	Ruby: fix character sequence "?\\#" to not include '#' in SCE_RB_NUMBER as only second '\' is quoted.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/69">Issue #69</a>.
+	</li>
+	<li>
+	Ruby: improve styling of ternary expressions as commonly used.
+	<a href="https://github.com/ScintillaOrg/lexilla/issues/69">Issue #69</a>.
+	</li>
+    </ul>
     <h3>
        <a href="https://www.scintilla.org/lexilla516.zip">Release 5.1.6</a>
     </h3>
