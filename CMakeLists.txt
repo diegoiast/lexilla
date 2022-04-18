@@ -6,7 +6,6 @@ project(lexzilla
     LANGUAGES CXX
 )
 
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -174,9 +173,6 @@ target_include_directories(lexzilla PRIVATE
 )
 set_property(TARGET lexzilla PROPERTY VERSION "${CMAKE_PROJECT_VERSION}")
 set_property(TARGET lexzilla PROPERTY SOVERSION 5 )
-
-# TODO enable this onl for release builds. Code crashes due to an assert right now.
-target_compile_definitions(lexzilla PRIVATE  -DNDEBUG=1)
 
 # TODO - this part is too ugly, and should not be here
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
