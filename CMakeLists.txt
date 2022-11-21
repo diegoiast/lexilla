@@ -9,7 +9,7 @@ project(lexzilla
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(LEXZILLA_SOURCES
+add_library(lexzilla
     src/Lexilla.cxx
     access/LexillaAccess.cxx
     access/LexillaAccess.h
@@ -161,14 +161,6 @@ set(LEXZILLA_SOURCES
     lexers/LexX12.cxx
     lexers/LexYAML.cxx
 )
-
-if (BUILD_STATIC)
-    set(CMAKE_STATIC_LIBRARY_SUFFIX "_static${CMAKE_STATIC_LIBRARY_SUFFIX}")
-    add_library(lexzilla STATIC ${LEXZILLA_SOURCES})
-else()
-    add_library(lexzilla SHARED ${LEXZILLA_SOURCES})
-endif()
-
 
 target_link_libraries(lexzilla scintilla-qt-edit)
 target_include_directories(lexzilla PUBLIC
