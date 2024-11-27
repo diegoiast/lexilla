@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(lexzilla
+project(lexilla
     VERSION 5.4.1
     DESCRIPTION "A library of language lexers for use with Scintilla "
     LANGUAGES CXX
@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # list generated using:
 # > ls -1 access/*.{h,hpp,cxx} src/*.{h,hpp,cxx} lexlib/*.{h,hpp,cxx} lexers/*.{h,hpp,cxx} | sort
-add_library(lexzilla
+add_library(lexilla
     access/LexillaAccess.cxx
     access/LexillaAccess.h
     lexers/LexA68k.cxx
@@ -169,26 +169,26 @@ add_library(lexzilla
     src/Lexilla.cxx
 )
 
-target_link_libraries(lexzilla scintilla-qt-edit)
-target_include_directories(lexzilla PUBLIC
+target_link_libraries(lexilla scintilla-qt-edit)
+target_include_directories(lexilla PUBLIC
     include/
 )
-target_include_directories(lexzilla PRIVATE
+target_include_directories(lexilla PRIVATE
     access/
     lexlib/
     include/
 )
-set_property(TARGET lexzilla PROPERTY VERSION "${CMAKE_PROJECT_VERSION}")
-set_property(TARGET lexzilla PROPERTY SOVERSION 5 )
+set_property(TARGET lexilla PROPERTY VERSION "${CMAKE_PROJECT_VERSION}")
+set_property(TARGET lexilla PROPERTY SOVERSION 5 )
 
 # TODO - this part is too ugly, and should not be here
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
-    target_compile_options(lexzilla PRIVATE -Wall -Wextra -pedantic --warn-no-unused-variable -Wformat -Wformat-security)
+    target_compile_options(lexilla PRIVATE -Wall -Wextra -pedantic --warn-no-unused-variable -Wformat -Wformat-security)
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    target_compile_options(lexzilla PRIVATE -Wall -Wextra -pedantic --warn-no-unused-variable -Wformat -Wformat-security)
+    target_compile_options(lexilla PRIVATE -Wall -Wextra -pedantic --warn-no-unused-variable -Wformat -Wformat-security)
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Intel")
     MESSAGE("TODO: Intel compiler uses generic builds - add better compile flags")
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-    target_compile_options(lexzilla PRIVATE /utf-8 /guard:cf)
-    target_link_options(lexzilla PRIVATE /guard:cf)
+    target_compile_options(lexilla PRIVATE /utf-8 /guard:cf)
+    target_link_options(lexilla PRIVATE /guard:cf)
 endif()
