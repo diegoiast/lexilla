@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 
 project(lexzilla
-    VERSION 5.1.5
+    VERSION 5.4.1
     DESCRIPTION "A library of language lexers for use with Scintilla "
     LANGUAGES CXX
 )
