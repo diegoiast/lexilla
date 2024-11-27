@@ -9,39 +9,11 @@ project(lexzilla
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# list generated using:
+# > ls -1 access/*.{h,hpp,cxx} src/*.{h,hpp,cxx} lexlib/*.{h,hpp,cxx} lexers/*.{h,hpp,cxx} | sort
 add_library(lexzilla
-    src/Lexilla.cxx
     access/LexillaAccess.cxx
     access/LexillaAccess.h
-    lexlib/Accessor.cxx
-    lexlib/Accessor.h
-    lexlib/CatalogueModules.h
-    lexlib/CharacterCategory.cxx
-    lexlib/CharacterCategory.h
-    lexlib/CharacterSet.cxx
-    lexlib/CharacterSet.h
-    lexlib/DefaultLexer.cxx
-    lexlib/DefaultLexer.h
-    lexlib/LexAccessor.cxx
-    lexlib/LexAccessor.h
-    lexlib/LexerBase.cxx
-    lexlib/LexerBase.h
-    lexlib/LexerModule.cxx
-    lexlib/LexerModule.h
-    lexlib/LexerNoExceptions.cxx
-    lexlib/LexerNoExceptions.h
-    lexlib/LexerSimple.cxx
-    lexlib/LexerSimple.h
-    lexlib/OptionSet.h
-    lexlib/PropSetSimple.cxx
-    lexlib/PropSetSimple.h
-    lexlib/SparseState.h
-    lexlib/StringCopy.h
-    lexlib/StyleContext.cxx
-    lexlib/StyleContext.h
-    lexlib/SubStyles.h
-    lexlib/WordList.cxx
-    lexlib/WordList.h
     lexers/LexA68k.cxx
     lexers/LexAbaqus.cxx
     lexers/LexAda.cxx
@@ -70,6 +42,7 @@ add_library(lexzilla
     lexers/LexCrontab.cxx
     lexers/LexCsound.cxx
     lexers/LexCSS.cxx
+    lexers/LexDart.cxx
     lexers/LexDataflex.cxx
     lexers/LexD.cxx
     lexers/LexDiff.cxx
@@ -115,6 +88,7 @@ add_library(lexzilla
     lexers/LexMySQL.cxx
     lexers/LexNim.cxx
     lexers/LexNimrod.cxx
+    lexers/LexNix.cxx
     lexers/LexNsis.cxx
     lexers/LexNull.cxx
     lexers/LexOpal.cxx
@@ -153,6 +127,8 @@ add_library(lexzilla
     lexers/LexTCL.cxx
     lexers/LexTCMD.cxx
     lexers/LexTeX.cxx
+    lexers/LexTOML.cxx
+    lexers/LexTroff.cxx
     lexers/LexTxt2tags.cxx
     lexers/LexVB.cxx
     lexers/LexVerilog.cxx
@@ -160,6 +136,37 @@ add_library(lexzilla
     lexers/LexVisualProlog.cxx
     lexers/LexX12.cxx
     lexers/LexYAML.cxx
+    lexers/LexZig.cxx
+    lexlib/Accessor.cxx
+    lexlib/Accessor.h
+    lexlib/CatalogueModules.h
+    lexlib/CharacterCategory.cxx
+    lexlib/CharacterCategory.h
+    lexlib/CharacterSet.cxx
+    lexlib/CharacterSet.h
+    lexlib/DefaultLexer.cxx
+    lexlib/DefaultLexer.h
+    lexlib/InList.cxx
+    lexlib/InList.h
+    lexlib/LexAccessor.cxx
+    lexlib/LexAccessor.h
+    lexlib/LexerBase.cxx
+    lexlib/LexerBase.h
+    lexlib/LexerModule.cxx
+    lexlib/LexerModule.h
+    lexlib/LexerSimple.cxx
+    lexlib/LexerSimple.h
+    lexlib/OptionSet.h
+    lexlib/PropSetSimple.cxx
+    lexlib/PropSetSimple.h
+    lexlib/SparseState.h
+    lexlib/StringCopy.h
+    lexlib/StyleContext.cxx
+    lexlib/StyleContext.h
+    lexlib/SubStyles.h
+    lexlib/WordList.cxx
+    lexlib/WordList.h
+    src/Lexilla.cxx
 )
 
 target_link_libraries(lexzilla scintilla-qt-edit)
