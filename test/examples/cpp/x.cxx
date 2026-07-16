@@ -66,9 +66,16 @@ b
 // Active
 #endif
 
+#define ONE 1
+#if ONE != 1
+// Inactive
+#endif
+
 int main() {
+#region array declarations
 	double x[] = {3.14159,6.02e23,1.6e-19,1.0+1};
 	int y[] = {75,0113,0x4b};
+#endregion
 	printf("hello world %d %g\n", y[0], x[0]);
 
 	// JavaScript regular expression (14) tests
@@ -78,10 +85,12 @@ int main() {
 	// arrow function
 	() => /a|b/i.test("baby");
 
+#pragma region print tests
 	// Escape sequence (27) tests
 	printf("\'\"\?\\\a\b\f\n\r\t\v \P");
 	printf("\0a \013a \019");
 	printf("\x013ac \xdz");
 	printf("\ua34df \uz");
 	printf("\Ua34df7833 \Uz");
+#pragma endregion
 }

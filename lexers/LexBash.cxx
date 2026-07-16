@@ -109,7 +109,7 @@ constexpr int translateBashDigit(int ch) noexcept {
 	return BASH_BASE_ERROR;
 }
 
-int getBashNumberBase(char *s) noexcept {
+int getBashNumberBase(const char *s) noexcept {
 	int i = 0;
 	int base = 0;
 	while (*s) {
@@ -164,7 +164,7 @@ bool IsCommentLine(Sci_Position line, LexAccessor &styler) {
 		const char ch = styler[i];
 		if (ch == '#')
 			return true;
-		else if (ch != ' ' && ch != '\t')
+		if (ch != ' ' && ch != '\t')
 			return false;
 	}
 	return false;
@@ -492,6 +492,7 @@ public:
 		bashStruct.Set("if elif fi while until else then do done esac eval");
 		bashStruct_in.Set("for case select");
 		testOperator.Set("eq ge gt le lt ne ef nt ot");
+		SetOptionSet(&osBash);
 	}
 	void SCI_METHOD Release() override {
 		delete this;
@@ -499,29 +500,10 @@ public:
 	int SCI_METHOD Version() const override {
 		return lvRelease5;
 	}
-	const char * SCI_METHOD PropertyNames() override {
-		return osBash.PropertyNames();
-	}
-	int SCI_METHOD PropertyType(const char* name) override {
-		return osBash.PropertyType(name);
-	}
-	const char * SCI_METHOD DescribeProperty(const char *name) override {
-		return osBash.DescribeProperty(name);
-	}
 	Sci_Position SCI_METHOD PropertySet(const char *key, const char *val) override;
-	const char * SCI_METHOD PropertyGet(const char* key) override {
-		return osBash.PropertyGet(key);
-	}
-	const char * SCI_METHOD DescribeWordListSets() override {
-		return osBash.DescribeWordListSets();
-	}
 	Sci_Position SCI_METHOD WordListSet(int n, const char *wl) override;
 	void SCI_METHOD Lex(Sci_PositionU startPos, Sci_Position length, int initStyle, IDocument *pAccess) override;
 	void SCI_METHOD Fold(Sci_PositionU startPos_, Sci_Position length, int initStyle, IDocument *pAccess) override;
-
-	void * SCI_METHOD PrivateCall(int, void *) override {
-		return nullptr;
-	}
 
 	int SCI_METHOD AllocateSubStyles(int styleBase, int numberStyles) override {
 		return subStyles.Allocate(styleBase, numberStyles);
@@ -698,7 +680,7 @@ void SCI_METHOD LexerBash::Lex(Sci_PositionU startPos, Sci_Position length, int 
 						identifierStyle = subStyle | insideCommand;
 					}
 					// allow keywords ending in a whitespace, meta character or command delimiter
-					char s2[10];
+					char s2[10]{};
 					s2[0] = static_cast<char>(sc.ch);
 					s2[1] = '\0';
 					const bool keywordEnds = IsASpace(sc.ch) || setMetaCharacter.Contains(sc.ch) || cmdDelimiter.InList(s2);
@@ -1140,7 +1122,7 @@ void SCI_METHOD LexerBash::Lex(Sci_PositionU startPos, Sci_Position length, int 
 				}
 				// handle command delimiters in command Start|Body|Word state, also Test if 'test' or '[]'
 				if (cmdState < CmdState::DoubleBracket) {
-					char s[10];
+					char s[10]{};
 					s[0] = static_cast<char>(sc.ch);
 					if (setBashOperator.Contains(sc.chNext)) {
 						s[1] = static_cast<char>(sc.chNext);
@@ -1268,14 +1250,9 @@ void SCI_METHOD LexerBash::Fold(Sci_PositionU startPos_, Sci_Position length, in
 		}
 
 		if (atEOL) {
-			int lev = levelPrev;
-			if (visibleChars == 0 && options.foldCompact)
-				lev |= SC_FOLDLEVELWHITEFLAG;
-			if ((levelCurrent > levelPrev) && (visibleChars > 0))
-				lev |= SC_FOLDLEVELHEADERFLAG;
-			if (lev != styler.LevelAt(lineCurrent)) {
-				styler.SetLevel(lineCurrent, lev);
-			}
+			const int lev = levelPrev |
+				FoldLevelFlags(levelPrev, levelCurrent, visibleChars == 0 && options.foldCompact, visibleChars > 0);
+			styler.SetLevelIfDifferent(lineCurrent, lev);
 			lineCurrent++;
 			levelPrev = levelCurrent;
 			visibleChars = 0;

@@ -15,13 +15,17 @@
 
 .SUFFIXES: .cxx
 
-DIR_O=.
+DIR_O=obj
 DIR_BIN=..\bin
 
 LEXILLA=$(DIR_BIN)\lexilla.dll
 LIBLEXILLA=$(DIR_BIN)\liblexilla.lib
 
 LD=link
+
+!IF "$(PLATFORM:64=)" == "arm"
+ARM64=1
+!ENDIF
 
 !IFDEF SUPPORT_XP
 ADD_DEFINE=-D_USING_V110_SDK71_
@@ -33,10 +37,11 @@ SUBSYSTEM=-SUBSYSTEM:WINDOWS,5.02
 SUBSYSTEM=-SUBSYSTEM:WINDOWS,5.01
 !ENDIF
 !ELSE
-CETCOMPAT=-CETCOMPAT
 !IFDEF ARM64
 ADD_DEFINE=-D_ARM64_WINAPI_PARTITION_DESKTOP_SDK_AVAILABLE=1
 SUBSYSTEM=-SUBSYSTEM:WINDOWS,10.00
+!ELSE
+CETCOMPAT=-CETCOMPAT
 !ENDIF
 !ENDIF
 
@@ -68,7 +73,10 @@ SCINTILLA_INCLUDE = ../../scintilla/include
 INCLUDEDIRS=-I../include -I$(SCINTILLA_INCLUDE) -I../lexlib
 CXXFLAGS=$(CXXFLAGS) $(INCLUDEDIRS)
 
-all:	$(SCINTILLA_INCLUDE) $(LEXILLA) $(LIBLEXILLA)
+all:	$(SCINTILLA_INCLUDE) $(DIR_O) $(LEXILLA) $(LIBLEXILLA)
+
+$(DIR_O):
+	mkdir "$(DIR_O)" 2>NUL || cd .
 
 clean:
 	-del /q $(DIR_O)\*.obj $(DIR_O)\*.o $(DIR_O)\*.pdb \
@@ -124,6 +132,7 @@ LEX_OBJS=\
 	$(DIR_O)\LexErlang.obj \
 	$(DIR_O)\LexErrorList.obj \
 	$(DIR_O)\LexEScript.obj \
+	$(DIR_O)\LexEscSeq.obj \
 	$(DIR_O)\LexFlagship.obj \
 	$(DIR_O)\LexForth.obj \
 	$(DIR_O)\LexFortran.obj \
@@ -183,6 +192,7 @@ LEX_OBJS=\
 	$(DIR_O)\LexRust.obj \
 	$(DIR_O)\LexSAS.obj \
 	$(DIR_O)\LexScriptol.obj \
+	$(DIR_O)\LexSINEX.obj \
 	$(DIR_O)\LexSmalltalk.obj \
 	$(DIR_O)\LexSML.obj \
 	$(DIR_O)\LexSorcus.obj \
