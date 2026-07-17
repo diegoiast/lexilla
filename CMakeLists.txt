@@ -54,6 +54,7 @@ add_library(lexilla
     lexers/LexErlang.cxx
     lexers/LexErrorList.cxx
     lexers/LexEScript.cxx
+    lexers/LexEscSeq.cxx
     lexers/LexFlagship.cxx
     lexers/LexForth.cxx
     lexers/LexFortran.cxx
@@ -113,6 +114,7 @@ add_library(lexilla
     lexers/LexRust.cxx
     lexers/LexSAS.cxx
     lexers/LexScriptol.cxx
+    lexers/LexSINEX.cxx
     lexers/LexSmalltalk.cxx
     lexers/LexSML.cxx
     lexers/LexSorcus.cxx
@@ -169,7 +171,7 @@ add_library(lexilla
     src/Lexilla.cxx
 )
 
-target_link_libraries(lexilla scintilla-qt-edit)
+target_link_libraries(lexilla scintilla-core)
 target_include_directories(lexilla PUBLIC
     include/
 )
